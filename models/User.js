@@ -20,5 +20,12 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
+    //Hooks
+    User.beforeCreate(function(user, options) {
+        user.password = user.password + '--hook';
+        // return hashPassword(user.password).then(function (hashedPw) {
+        // user.password = hashedPw;
+    });
+
     return User;
 };
