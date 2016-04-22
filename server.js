@@ -7,10 +7,11 @@ var express     = require('express'),
     models      = require('./models'),
     db          = models.db,
     User        = models.User,
-    users       = require('./routes/users'),
-    auth        = require('./routes/auth');
+    users       = require('./controllers/users'),
+    auth        = require('./controllers/auth'),
+    cors        = require('cors');
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8077;
 app.set('superSecret', config.secret);
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,6 +20,9 @@ app.use(bodyParser.json());
 
 // use morgan to log requests to the console
 app.use(morgan('dev'));
+
+//CrossOrigin
+app.use(cors());
 
 //register the users route with api prefix
 app.use('/api', users);
