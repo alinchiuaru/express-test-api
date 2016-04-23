@@ -1,9 +1,10 @@
-var models  = require('../models');
-var express = require('express');
-var router  = express.Router();
-var User    = models.User;
-var jwt     = require('jsonwebtoken');
-var config  = require('../config');
+var models    = require('../models');
+var express   = require('express');
+var router    = express.Router();
+var User      = models.User;
+var jwt       = require('jsonwebtoken');
+var config    = require('../config');
+var cryptoMD5 = require('crypto-js/md5');
 
 
 function generateToken(user) {
@@ -16,7 +17,7 @@ router.post('/auth', function(req, res) {
     User.findOne({ where: { username: req.body.username } })
         .then(function(user) {
 
-            if ( !user || user.password !== req.body.password  ) {
+            if ( !user || user.password !==  cryptoMD5(req.body.password)  ) {
                 res.json({ succcess: false, message: 'Username or password is incorrect!' });
             } else {
 

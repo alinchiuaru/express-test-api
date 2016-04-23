@@ -1,3 +1,5 @@
+var cryptoMD5 = require('crypto-js/md5');
+
 module.exports = function (sequelize, DataTypes) {
     var User = sequelize.define('User', {
         id: {
@@ -20,11 +22,9 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    //Hooks
+    //before create hash the password
     User.beforeCreate(function(user, options) {
-        user.password = user.password + '--hook';
-        // return hashPassword(user.password).then(function (hashedPw) {
-        // user.password = hashedPw;
+        user.password = cryptoMD5(user.password);
     });
 
     return User;
