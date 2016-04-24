@@ -24,7 +24,7 @@ module.exports = function (sequelize, DataTypes) {
 
     //before create hash the password
     User.beforeCreate(function(user, options) {
-        user.password = cryptoMD5(user.password);
+        user.password = cryptoMD5(user.password).toString();
     });
 
     return User;

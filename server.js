@@ -1,9 +1,11 @@
+'use strict';
+
 var express       = require('express'),
     app           = express(),
     bodyParser    = require('body-parser'),
     jwt           = require('jsonwebtoken'),
     config        = require('./config'),
-    morgan        = require('morgan');
+    morgan        = require('morgan'),
     models        = require('./models'),
     db            = models.db,
     User          = models.User,

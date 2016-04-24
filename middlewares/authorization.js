@@ -1,3 +1,5 @@
+'use strict';
+
 var express     = require('express'),
     app         = express(),
     routes      = express.Router(),
@@ -12,9 +14,8 @@ routes.use(function(req, res, next) {
             if (err) {
                 res.json({ success: false, message: 'Failed to authenticate token.' });
             } else {
-                next();
+               next();
             }
-        
         });
     } 
 });

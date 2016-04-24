@@ -1,3 +1,5 @@
+'use strict';
+
 var models    = require('../models');
 var express   = require('express');
 var router    = express.Router();
@@ -9,15 +11,14 @@ var cryptoMD5 = require('crypto-js/md5');
 
 function generateToken(user) {
     return jwt.sign({ user: user }, config.secret, {
-        expiresIn: 600 * 60 //sec
+        expiresIn: '1h'
     });
 }
 
 router.post('/auth', function(req, res) {
     User.findOne({ where: { username: req.body.username } })
         .then(function(user) {
-
-            if ( !user || user.password !==  cryptoMD5(req.body.password)  ) {
+            if ( !user || user.password !==  cryptoMD5(req.body.password).toString()  ) {
                 res.json({ succcess: false, message: 'Username or password is incorrect!' });
             } else {
 
