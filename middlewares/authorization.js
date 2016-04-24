@@ -1,41 +1,49 @@
 'use strict';
 
-var express     = require('express'),
-    app         = express(),
-    routes      = express.Router(),
-    jwt         = require('jsonwebtoken'),
+var jwt         = require('jsonwebtoken'),
     config      = require('../config');
 
 
-function _grantAcess( isAdminRequired ) {
-    var isAdminRequired = isAdminRequired || false;
+function regularAccess(req, res, next) {
+    checkAuth(req, function(err) {
+        if ( err ) {
+            console.log(err);
+            res.json({ success: false, message: 'Failed to authenticate token.' });
+        } else {
+            next();
+        }
+     });
+}
 
-    routes.use(function(req, res, next) {
-        var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers['token'];
-        if ( token ) {
-            jwt.verify(token, config.secret, function(err, decoded) {
-                console.log(decoded.user);
-                if (err ||  (isAdminRequired && decoded.user.admin) ) {
-                    res.json({ success: false, message: 'Failed to authenticate token.' });
-                } else {
-                   next();
-                }
-            });
-        } 
+
+function adminAccess(req, res, next) {
+    checkAuth(req, function(err, authorized) {
+        if ( err || !authorized ) {
+            res.json({ success: false, message: 'Failed to authenticate token. (Admin access required)' });
+        } else {
+            next();
+        }
     });
 }
 
-routes.use(function(req, res, next) {
+function checkAuth(req, callback) {
     var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers['token'];
+
     if ( token ) {
         jwt.verify(token, config.secret, function(err, decoded) {
-            if (err) {
-                res.json({ success: false, message: 'Failed to authenticate token.' });
+            if ( err ) {
+                callback(err);
             } else {
-               next();
+                if ( decoded.user.admin ) {
+                    callback(null, true);
+                } else {
+                    callback(null, false);
+                }
             }
         });
-    } 
-});
+    }
+}
 
-module.exports = routes;
+
+module.exports = { regularAccess: regularAccess, adminAccess: adminAccess };
+

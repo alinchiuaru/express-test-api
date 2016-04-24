@@ -4,9 +4,10 @@ var router = express.Router();
 var User = models.User;
 var jwt = require('jsonwebtoken');
 var config = require('../config');
+var authorization = require('../middlewares/authorization');
 
 //Regular users may fetch all users list
-router.get('/users', function(req, res) {
+router.get('/users', authorization.adminAccess, function(req, res) {
     User.findAll({
         attributes : ['id', 'username', 'admin']
     }).then(function(data) {
@@ -16,7 +17,7 @@ router.get('/users', function(req, res) {
 
 
 //Only admins may create other users
-router.post('/users', function(req, res) {
+router.post('/users', authorization.adminAccess, function(req, res) {
     User.create({
         username: req.body.username,
         password: req.body.password,
