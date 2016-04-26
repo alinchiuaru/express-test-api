@@ -32,14 +32,21 @@ app.use('/api', users);
 //register auth route
 app.use(auth);
 
-
 app.get('/', function(req, res) {
     res.send('Hello! The API is at http://localhost:' + port + '/api');
 });
 
 
-//Create the tabel if not exist then start the app;
-User.sync().then(function() {
-    app.listen(port);
-    console.log('API runs on localhost @ port: ' + port);
-});
+var modelsSync = [
+    models.User.sync(),
+    models.Course.sync(),
+    models.Chapter.sync(),
+    models.Lesson.sync()
+];
+
+Promise.all(modelsSync)
+    .then(function() {
+        app.listen(port);
+        console.log('API runs on localhost @ port: ' + port);
+    });
+

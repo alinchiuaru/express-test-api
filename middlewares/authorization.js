@@ -44,6 +44,23 @@ function checkAuth(req, callback) {
     }
 }
 
+function decodeToken(req) {
+    var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers['token'],
+        decodedToken = null;
 
-module.exports = { regularAccess: regularAccess, adminAccess: adminAccess };
+    if ( !token ) {
+        return decodeToken;
+    }
+
+    jwt.verify(token, config.secret, function(err, decoded) {
+        if ( err ) {
+            return decodedToken;
+        } else {
+            return decoded;
+        }
+    });
+}
+
+
+module.exports = { regularAccess: regularAccess, adminAccess: adminAccess, decodeToken: decodeToken };
 
