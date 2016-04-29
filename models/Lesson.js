@@ -18,6 +18,10 @@ module.exports = function (sequelize, DataTypes) {
             description: {
                 type: DataTypes.STRING
             },
+
+            content: {
+                type: DataTypes.STRING
+            }
         },
         {
             classMethods:{

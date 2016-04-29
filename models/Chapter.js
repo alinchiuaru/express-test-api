@@ -21,7 +21,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         {
             classMethods:{
-                associate:function(models){
+                associate:function(models) {
                     Chapter.belongsTo(models.Course, { foreignKey: 'courseId'} );
                     Chapter.hasMany(models.Lesson, { foreignKey: 'id'} );
                 }
