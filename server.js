@@ -7,8 +7,6 @@ var express       = require('express'),
     config        = require('./config'),
     morgan        = require('morgan'),
     models        = require('./models'),
-    db            = models.db,
-    User          = models.User,
     users         = require('./controllers/users'),
     auth          = require('./controllers/auth'),
     cors          = require('cors');
@@ -41,7 +39,9 @@ var modelsSync = [
     models.User.sync(),
     models.Course.sync(),
     models.Chapter.sync(),
-    models.Lesson.sync()
+    models.Lesson.sync(),
+    models.Quiz.sync(),
+    models.Question.sync()
 ];
 
 Promise.all(modelsSync)
