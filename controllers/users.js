@@ -9,7 +9,7 @@ var authorization = require('../middlewares/authorization');
 //Regular users may fetch all users list
 router.get('/users', authorization.adminAccess, function(req, res) {
     User.findAll({
-        attributes : ['id', 'username', 'admin']
+        attributes : ['id', 'username', 'email', 'admin']
     }).then(function(data) {
         res.json(data);
     });
@@ -21,6 +21,7 @@ router.post('/users', authorization.adminAccess, function(req, res) {
     User.create({
         username: req.body.username,
         password: req.body.password,
+        email: req.body.email,
         admin: req.body.admin || false
     })
     .then(function(data) {
