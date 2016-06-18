@@ -8,6 +8,9 @@ var express       = require('express'),
     morgan        = require('morgan'),
     models        = require('./models'),
     users         = require('./controllers/users'),
+    courses       = require('./controllers/courses'),
+    chapters      = require('./controllers/chapters'),
+    lessons       = require('./controllers/lesson'),
     auth          = require('./controllers/auth'),
     cors          = require('cors');
 
@@ -26,6 +29,9 @@ app.use(cors());
 
 //register the users route with api prefix
 app.use('/api', users);
+app.use('/api', courses);
+app.use('/api', chapters);
+app.use('/api', lessons);
 
 //register auth route
 app.use(auth);

@@ -21,7 +21,7 @@ router.post('/chapters', authorization.adminAccess, function(req, res) {
     Chapter.create({
         name: req.body.name,
         description: req.body.description || '',
-        courseId: req.body.courseId
+        courseId: req.body.courseId,
         createdByUser: createdById
     })
     .then(function(data) {

@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "rooot",
+    "password": "root",
     "database": "nodetest",
     "host": "127.0.0.1",
     "dialect": "mysql"

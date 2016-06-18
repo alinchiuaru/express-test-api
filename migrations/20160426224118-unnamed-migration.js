@@ -1,23 +1,32 @@
 'use strict';
 
 module.exports = {
-  up: function (queryInterface, Sequelize) {
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
+    up: function (queryInterface, Sequelize) {
+        return queryInterface.createTable('courses_students', {
+          id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+          },
+          courseId: {
+            type: Sequelize.INTEGER
+          },
+          studentId: {
+            type: Sequelize.INTEGER
+          }
+        })
+        .then(function() {
+            queryInterface.addIndex('courses_students',
+                ['courseId', 'studentId'],
+                {
+                    indexName: 'courseStudentIndex',
+                    indicesType: 'UNIQUE'
+                }
+            )
+        });
+    },
 
-      Example:
-      return queryInterface.createTable('users', { id: Sequelize.INTEGER });
-    */
-  },
-
-  down: function (queryInterface, Sequelize) {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.dropTable('users');
-    */
-  }
+    down: function (queryInterface, Sequelize) {
+        return queryInterface.dropTable('courses_students');
+    }
 };

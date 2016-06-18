@@ -11,7 +11,7 @@ var cryptoMD5 = require('crypto-js/md5');
 
 function generateToken(user) {
     return jwt.sign({ user: user }, config.secret, {
-        expiresIn: '1h'
+        expiresIn: '24h'
     });
 }
 

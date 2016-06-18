@@ -21,7 +21,7 @@ router.post('/lessons', authorization.adminAccess, function(req, res) {
     Lesson.create({
         name: req.body.name,
         description: req.body.description || '',
-        chapterId: req.body.courseId
+        chapterId: req.body.courseId,
         createdByUser: createdById
     })
     .then(function(data) {
