@@ -9,7 +9,7 @@ router.get('/courses', authorization.adminAccess, function(req, res) {
     Course.findAll({
         attributes : ['id', 'name', 'description']
     }).then(function(data) {
-        res.json(data);
+        res.json({success: true, data: data});
     });
 });
 
@@ -26,7 +26,7 @@ router.post('/courses', authorization.adminAccess, function(req, res) {
         res.json({success: true, data: data});
     })
     .catch(function(err) {
-        res.json({success: false, message: err})
+        res.json({success: false, message: err});
     });
 });
 
@@ -39,6 +39,9 @@ router.get('/courses/:courseId/students', authorization.adminAccess, function(re
     sequelize.query(`SELECT * from courses_students WHERE courseId = ${courseId}`, { type: sequelize.QueryTypes.SELECT})
         .then(function(students) {
             res.json({ success: true, data: students });
+        })
+        .catch(function(error) {
+            res.json({ success: false, data: error });
         });
 
 });
@@ -50,6 +53,9 @@ router.get('/courses/students/:studentId', authorization.adminAccess, function(r
     sequelize.query(`SELECT courseId from courses_students WHERE studentId = ${studentId}`, { type: sequelize.QueryTypes.SELECT})
         .then(function(coursesIds) {
             res.json({ success: true, data: coursesIds });
+        })
+        .catch(function(error) {
+            res.json({ success: false, data: error });
         });
 
 });
@@ -64,7 +70,7 @@ router.post('/courses/:courseId/students/:studentId', authorization.adminAccess,
             res.json({ success: true, data: entry });
         })
         .catch(function(error) {
-            res.json({ success: false, data: error })
+            res.json({ success: false, data: error });
         });
 
 });
@@ -78,6 +84,9 @@ router.delete('/courses/:courseId/students/:studentId', authorization.adminAcces
         .then(function(entry) {
             res.json({ success: true, data: entry });
         })
+        .catch(function(error) {
+            res.json({ success: false, data: error });
+        });
 
 });
 
