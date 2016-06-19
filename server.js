@@ -41,18 +41,8 @@ app.get('/', function(req, res) {
 });
 
 
-var modelsSync = [
-    models.User.sync(),
-    models.Course.sync(),
-    models.Chapter.sync(),
-    models.Lesson.sync(),
-    models.Quiz.sync(),
-    models.Question.sync()
-];
-
-Promise.all(modelsSync)
-    .then(function() {
-        app.listen(port);
-        console.log('API runs on localhost @ port: ' + port);
-    });
-
+//Sync models and start app on specified port
+models.sequelize.sync().then(function() {
+    app.listen(port);
+    console.log('API runs on localhost @ port: ' + port);
+});
