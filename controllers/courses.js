@@ -15,12 +15,9 @@ router.get('/courses', authorization.adminAccess, function(req, res) {
 
 
 router.post('/courses', authorization.adminAccess, function(req, res) {
-    var createdById = authorization.decodeToken(req) ? authorization.decodeToken(req).user.id : -1;
-
     Course.create({
         name: req.body.name,
         description: req.body.description || '',
-        createdByUser: createdById
     })
     .then(function(data) {
         res.json({success: true, data: data});

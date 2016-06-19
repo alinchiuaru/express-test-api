@@ -16,13 +16,10 @@ router.get('/lessons', authorization.adminAccess, function(req, res) {
 
 
 router.post('/lessons', authorization.adminAccess, function(req, res) {
-    var createdById = authorization.decodeToken(req) ? authorization.decodeToken(req).user.id : -1;
-
     Lesson.create({
         name: req.body.name,
         description: req.body.description || '',
-        chapterId: req.body.courseId,
-        createdByUser: createdById
+        chapterId: req.body.chapterId,
     })
     .then(function(data) {
         res.json({success: true, data: data});

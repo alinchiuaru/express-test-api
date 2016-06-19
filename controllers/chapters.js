@@ -16,13 +16,10 @@ router.get('/chapters', authorization.adminAccess, function(req, res) {
 
 
 router.post('/chapters', authorization.adminAccess, function(req, res) {
-    var createdById = authorization.decodeToken(req) ? authorization.decodeToken(req).user.id : -1;
-
     Chapter.create({
         name: req.body.name,
         description: req.body.description || '',
         courseId: req.body.courseId,
-        createdByUser: createdById
     })
     .then(function(data) {
         res.json({success: true, data: data});
