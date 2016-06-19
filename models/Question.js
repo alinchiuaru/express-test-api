@@ -7,10 +7,6 @@ module.exports = function (sequelize, DataTypes) {
                 autoIncrement: true
             },
 
-            createdByUser: {
-                type: DataTypes.INTEGER,
-            },
-
             questionData: {
                 type: DataTypes.STRING
             }

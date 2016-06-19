@@ -12,10 +12,6 @@ module.exports = function (sequelize, DataTypes) {
                 unique: true
             },
 
-            createdByUser: {
-                type: DataTypes.INTEGER,
-            },
-
             description: {
                 type: DataTypes.STRING
             },
