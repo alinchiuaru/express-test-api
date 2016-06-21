@@ -5,9 +5,8 @@ var jwt         = require('jsonwebtoken'),
 
 
 function regularAccess(req, res, next) {
-    checkAuth(req, function(err) {
+    checkAuth(req, res, function(err) {
         if ( err ) {
-            console.log(err);
             res.json({ success: false, message: 'Failed to authenticate token.' });
         } else {
             next();
@@ -17,7 +16,7 @@ function regularAccess(req, res, next) {
 
 
 function adminAccess(req, res, next) {
-    checkAuth(req, function(err, authorized) {
+    checkAuth(req, res, function(err, authorized) {
         if ( err || !authorized ) {
             res.json({ success: false, message: 'Failed to authenticate token. (Admin access required)' });
         } else {
@@ -26,7 +25,7 @@ function adminAccess(req, res, next) {
     });
 }
 
-function checkAuth(req, callback) {
+function checkAuth(req, res, callback) {
     var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers['token'];
 
     if ( token ) {
@@ -41,6 +40,8 @@ function checkAuth(req, callback) {
                 }
             }
         });
+    } else {
+        res.status(500).send('You are not authenticated');
     }
 }
 

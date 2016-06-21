@@ -7,7 +7,7 @@ module.exports = function (sequelize, DataTypes) {
                 autoIncrement: true
             },
 
-            name: {
+            title: {
                 type: DataTypes.STRING,
                 unique: true
             },
@@ -15,6 +15,10 @@ module.exports = function (sequelize, DataTypes) {
             description: {
                 type: DataTypes.STRING
             },
+
+            logo: {
+                type: DataTypes.STRING
+            }
         },
         {
             classMethods:{

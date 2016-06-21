@@ -7,7 +7,7 @@ var sequelize = require('../models').sequelize;
 
 router.get('/courses', authorization.adminAccess, function(req, res) {
     Course.findAll({
-        attributes : ['id', 'name', 'description']
+        attributes : ['id', 'title', 'description', 'logo']
     }).then(function(data) {
         res.json({success: true, data: data});
     });
@@ -16,8 +16,9 @@ router.get('/courses', authorization.adminAccess, function(req, res) {
 
 router.post('/courses', authorization.adminAccess, function(req, res) {
     Course.create({
-        name: req.body.name,
+        title: req.body.title,
         description: req.body.description || '',
+        logo: req.body.logo || ''
     })
     .then(function(data) {
         res.json({success: true, data: data});
