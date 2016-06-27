@@ -21,7 +21,13 @@ router.post('/courses', authorization.adminAccess, function(req, res) {
         logo: req.body.logo || ''
     })
     .then(function(data) {
-        res.json({success: true, data: data});
+        authorization.decodeToken(req)
+            .then(function(decoded) {
+                sequelize.query(`INSERT INTO courses_instructors (courseId, instructorId) VALUES ( ${data.dataValues.id}, ${decoded.user.id} )`, {type: sequelize.QueryTypes.INSERT})
+                    .then(function() {
+                        res.json({success: true, data: data});
+                    });
+            });
     })
     .catch(function(err) {
         res.json({success: false, message: err});
