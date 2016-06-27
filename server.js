@@ -1,19 +1,20 @@
 'use strict';
 
-var express         = require('express'),
-    app             = express(),
-    bodyParser      = require('body-parser'),
-    jwt             = require('jsonwebtoken'),
-    config          = require('./config'),
-    morgan          = require('morgan'),
-    models          = require('./models'),
-    users           = require('./controllers/users'),
-    courses         = require('./controllers/courses'),
-    coursesStudents = require('./controllers/coursesStudents'),
-    chapters        = require('./controllers/chapters'),
-    lessons         = require('./controllers/lesson'),
-    auth            = require('./controllers/auth'),
-    cors            = require('cors');
+var express            = require('express'),
+    app                = express(),
+    bodyParser         = require('body-parser'),
+    jwt                = require('jsonwebtoken'),
+    config             = require('./config'),
+    morgan             = require('morgan'),
+    models             = require('./models'),
+    users              = require('./controllers/users'),
+    courses            = require('./controllers/courses'),
+    coursesStudents    = require('./controllers/coursesStudents'),
+    coursesInstructors = require('./controllers/coursesInstructors'),
+    chapters           = require('./controllers/chapters'),
+    lessons            = require('./controllers/lesson'),
+    auth               = require('./controllers/auth'),
+    cors               = require('cors');
 
 var port = process.env.PORT || 8077;
 app.set('superSecret', config.secret);
@@ -33,6 +34,7 @@ app.use('/api', users);
 app.use('/api', courses);
 app.use('/api', chapters);
 app.use('/api', lessons);
+app.use('/api', coursesStudents);
 app.use('/api', coursesStudents);
 
 //register auth route
