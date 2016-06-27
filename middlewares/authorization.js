@@ -46,20 +46,21 @@ function checkAuth(req, res, callback) {
 }
 
 function decodeToken(req) {
-    var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers['token'],
-        decodedToken = null;
+    var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers['token'];
 
-    if ( !token ) {
-        return decodeToken;
+    if ( token ) {
+        jwt.verify(token, config.secret, function(err, decoded) {
+            if ( err ) {
+                return false;
+            } else {
+                return decoded;
+            }
+        });
+    } else {
+        return false;
     }
 
-    jwt.verify(token, config.secret, function(err, decoded) {
-        if ( err ) {
-            return decodedToken;
-        } else {
-            return decoded;
-        }
-    });
+
 }
 
 
