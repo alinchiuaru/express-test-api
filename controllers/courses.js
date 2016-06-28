@@ -2,12 +2,24 @@ var models = require('../models');
 var express = require('express');
 var router = express.Router();
 var Course = models.Course;
+var Chapter = models.Chapter;
+var Quiz = models.Quiz;
 var authorization = require('../middlewares/authorization');
 var sequelize = require('../models').sequelize;
 
-router.get('/courses', authorization.adminAccess, function(req, res) {
-    Course.findAll({
-        attributes : ['id', 'title', 'description', 'logo']
+// router.get('/courses', authorization.adminAccess, function(req, res) {
+//     Course.findAll({
+//         attributes : ['id', 'title', 'description', 'logo']
+//     }).then(function(data) {
+//         res.json({success: true, data: data});
+//     });
+// });
+
+router.get('/courses/:courseId', authorization.regularAccess, function(req, res) {
+    Course.findOne({
+        attributes : ['id', 'title', 'description', 'logo'],
+        where: {id: req.params.courseId },
+        include: [ {model: Chapter, as: 'chapters'}, {model: Quiz, as: 'quizzes'} ]
     }).then(function(data) {
         res.json({success: true, data: data});
     });
@@ -34,7 +46,7 @@ router.post('/courses', authorization.adminAccess, function(req, res) {
     });
 });
 
-router.get('/courses/me', authorization.regularAccess, function(req, res) {
+router.get('/courses', authorization.regularAccess, function(req, res) {
     authorization.decodeToken(req)
         .then(function(decoded) {
             if ( decoded.user.admin ) {
