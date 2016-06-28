@@ -18,7 +18,7 @@ router.get('/courses/:courseId/instructors', authorization.adminAccess, function
 
 });
 
-//get all courses a student is assigned to
+//get all courses a instructor is assigned to
 router.get('/courses/instructors/:instructorId', authorization.adminAccess, function(req, res) {
     var instructorId = req.params.instructorId;
 
@@ -32,7 +32,7 @@ router.get('/courses/instructors/:instructorId', authorization.adminAccess, func
 
 });
 
-//assign student to a course
+//assign instructor to a course
 router.post('/courses/:courseId/instructors/:instructorId', authorization.adminAccess, function(req, res) {
     var courseId = req.params.courseId,
         instructorId = req.params.instructorId;
@@ -47,7 +47,7 @@ router.post('/courses/:courseId/instructors/:instructorId', authorization.adminA
 
 });
 
-//remove student from a course
+//remove instructor from a course
 router.delete('/courses/:courseId/instructors/:instructorId', authorization.adminAccess, function(req, res) {
     var courseId = req.params.courseId,
         instructorId = req.params.instructorId;
