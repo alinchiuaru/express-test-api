@@ -7,7 +7,7 @@ var jwt         = require('jsonwebtoken'),
 function regularAccess(req, res, next) {
     checkAuth(req, res, function(err) {
         if ( err ) {
-            res.json({ success: false, message: 'Failed to authenticate token.' });
+            res.sendStatus(403);
         } else {
             next();
         }
@@ -18,7 +18,7 @@ function regularAccess(req, res, next) {
 function adminAccess(req, res, next) {
     checkAuth(req, res, function(err, authorized) {
         if ( err || !authorized ) {
-            res.json({ success: false, message: 'Failed to authenticate token. (Admin access required)' });
+            res.sendStatus(403);
         } else {
             next();
         }
@@ -41,7 +41,7 @@ function checkAuth(req, res, callback) {
             }
         });
     } else {
-        res.status(500).send('You are not authenticated');
+        res.status(403).send('You are not authenticated');
     }
 }
 

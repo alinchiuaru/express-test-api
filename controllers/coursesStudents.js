@@ -19,7 +19,7 @@ router.get('/courses/:courseId/students', authorization.adminAccess, function(re
 });
 
 //get all courses a student is assigned to
-router.get('/courses/students/:studentId', authorization.adminAccess, function(req, res) {
+router.get('/courses/students/:studentId', authorization.regularAccess, function(req, res) {
     var studentId = req.params.studentId;
 
     sequelize.query(`SELECT courseId from courses_students WHERE studentId = ${studentId}`, { type: sequelize.QueryTypes.SELECT})
