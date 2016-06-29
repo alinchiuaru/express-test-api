@@ -8,7 +8,7 @@ var authorization = require('../middlewares/authorization');
 
 router.get('/chapters', authorization.adminAccess, function(req, res) {
     Chapter.findAll({
-        attributes : ['id', 'name', 'description']
+        attributes : ['id', 'title', 'description', 'lectureNode']
     }).then(function(data) {
         res.json(data);
     });
@@ -17,9 +17,10 @@ router.get('/chapters', authorization.adminAccess, function(req, res) {
 
 router.post('/chapters', authorization.adminAccess, function(req, res) {
     Chapter.create({
-        name: req.body.name,
+        title: req.body.title,
         description: req.body.description || '',
         courseId: req.body.courseId,
+        lectureNote: req.body.lectureNote
     })
     .then(function(data) {
         res.json({success: true, data: data});

@@ -7,6 +7,14 @@ module.exports = function (sequelize, DataTypes) {
                 autoIncrement: true
             },
 
+            title: {
+                type: DataTypes.STRING
+            },
+
+            score: {
+                type: DataTypes.INTEGER,
+            },
+
             questionData: {
                 type: DataTypes.TEXT('long')
             }

@@ -7,13 +7,17 @@ module.exports = function (sequelize, DataTypes) {
                 autoIncrement: true
             },
 
-            name: {
+            title: {
                 type: DataTypes.STRING,
             },
 
             description: {
                 type: DataTypes.STRING
             },
+
+            lectureNote: {
+                type: DataTypes.TEXT('long')
+            }
         },
         {
             classMethods:{
