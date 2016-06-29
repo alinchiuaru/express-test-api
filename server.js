@@ -13,6 +13,8 @@ var express            = require('express'),
     coursesInstructors = require('./controllers/coursesInstructors'),
     chapters           = require('./controllers/chapters'),
     lessons            = require('./controllers/lesson'),
+    quizzes            = require('./controllers/quizzes'),
+    answerQuestion     = require('./controllers/answerQuestion'),
     auth               = require('./controllers/auth'),
     cors               = require('cors');
 
@@ -33,9 +35,13 @@ app.use(cors());
 app.use('/api', users);
 app.use('/api', courses);
 app.use('/api', chapters);
-app.use('/api', lessons);
+app.use('/api', quizzes);
+app.use('/api', answerQuestion);
+
+// app.use('/api', lessons);
+
 app.use('/api', coursesStudents);
-app.use('/api', coursesStudents);
+app.use('/api', coursesInstructors);
 
 //register auth route
 app.use(auth);

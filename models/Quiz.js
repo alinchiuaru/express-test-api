@@ -19,7 +19,7 @@ module.exports = function (sequelize, DataTypes) {
             classMethods:{
                 associate:function(models) {
                     Quiz.belongsTo(models.Course, { foreignKey: 'courseId'} );
-                    Quiz.hasMany(models.Question, { foreignKey: 'id'} );
+                    Quiz.hasMany(models.Question, { foreignKey: 'id', as: 'questions'} );
                 }
             }
         }

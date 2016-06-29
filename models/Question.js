@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
             },
 
             questionData: {
-                type: DataTypes.STRING
+                type: DataTypes.TEXT('long')
             }
         },
         {
