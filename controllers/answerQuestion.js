@@ -11,8 +11,20 @@ router.post('/practice/:questionId', authorization.regularAccess, function(req, 
         attributes : ['id', 'questionData'],
         where: {id: req.params.questionId },
     }).then(function(data) {
-        console.log( MCValidator.validate(req.body.answers, data.questionData) );
-        res.json({question: data});
+        authorization.decodeToken(req)
+            .then(function(decoded) {
+                let correct = MCValidator.validate(req.body.answers, data.questionData),
+                    query = `INSERT INTO students_question (questionId, studentId, correct) VALUES ( ${data.id}, ${decoded.user.id}, ${correct} )`;
+
+                sequelize.query(query, { type: sequelize.QueryTypes.INSERT})
+                    .then(function(data) {
+                        res.json({ success: true, data: data });
+                    })
+                    .catch(function(error) {
+                        res.json({ success: false, data: error });
+                    });
+
+            });
     });
 });
 
