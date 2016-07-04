@@ -8,13 +8,16 @@ var MCValidator = require('../validators/MCValidator');
 
 router.post('/practice/:questionId', authorization.regularAccess, function(req, res) {
     Question.findOne({
-        attributes : ['id', 'questionData'],
+        attributes : ['id', 'questionData', 'quizId', 'score'],
         where: {id: req.params.questionId },
     }).then(function(data) {
         authorization.decodeToken(req)
             .then(function(decoded) {
                 let correct = MCValidator.validate(req.body.answers, data.questionData),
-                    query = `INSERT INTO students_question (questionId, studentId, correct) VALUES ( ${data.id}, ${decoded.user.id}, ${correct} )`;
+                    receivedScore = correct ? data.score : 0;
+
+                let query = `INSERT INTO students_question (questionId, studentId, correct, quizId, receivedScore)
+                    VALUES ( ${data.id}, ${decoded.user.id}, ${correct}, ${data.quizId}, ${receivedScore} )`;
 
                 sequelize.query(query, { type: sequelize.QueryTypes.INSERT})
                     .then(function(data) {

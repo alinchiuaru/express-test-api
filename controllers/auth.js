@@ -18,7 +18,7 @@ function generateToken(user) {
 router.post('/auth', function(req, res) {
     User.findOne({ where: { username: req.body.username } })
         .then(function(user) {
-            if ( !user || user.password !==  cryptoMD5(req.body.password).toString()  ) {
+            if ( !user || user.password !==  cryptoMD5(req.body.password).toString() ) {
                 res.json({ success: false, message: 'Username or password is incorrect!' });
             } else {
                 user.password = cryptoMD5(user.password).toString(); //crypt the password before generating the token

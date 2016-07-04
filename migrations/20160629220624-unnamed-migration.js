@@ -14,6 +14,15 @@ module.exports = {
           studentId: {
             type: Sequelize.INTEGER
           },
+          quizId: {
+              type: Sequelize.INTEGER
+          },
+          studentAnswer: {
+              type: Sequelize.TEXT('long')
+          },
+          receivedScore: {
+            type: Sequelize.INTEGER
+          },
           correct: {
             type: Sequelize.BOOLEAN
           }

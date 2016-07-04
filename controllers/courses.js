@@ -64,7 +64,7 @@ router.get('/courses', authorization.regularAccess, function(req, res) {
             } else {
                 let query = `SELECT Courses.id, title, description, logo
                 FROM Courses LEFT JOIN courses_students ON Courses.id=courses_students.courseId
-                WHERE courses_students.instructorId = ${decoded.user.id}`;
+                WHERE courses_students.studentId = ${decoded.user.id}`;
 
                 sequelize.query(query, { type: sequelize.QueryTypes.SELECT})
                     .then(function(data) {
