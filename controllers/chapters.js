@@ -5,6 +5,7 @@ var Chapter = models.Chapter;
 var jwt = require('jsonwebtoken');
 var config = require('../config');
 var authorization = require('../middlewares/authorization');
+const querystring = require('querystring');
 
 router.get('/chapters', authorization.adminAccess, function(req, res) {
     Chapter.findAll({
@@ -20,7 +21,7 @@ router.post('/chapters', authorization.adminAccess, function(req, res) {
         title: req.body.title,
         description: req.body.description || '',
         courseId: req.body.courseId,
-        lectureNote: req.body.lectureNote
+        lectureNote: querystring.escape(req.body.lectureNote)
     })
     .then(function(data) {
         res.json({success: true, data: data});

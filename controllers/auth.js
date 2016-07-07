@@ -24,7 +24,7 @@ router.post('/auth', function(req, res) {
                 user.password = cryptoMD5(user.password).toString(); //crypt the password before generating the token
 
                 var token = generateToken(user);
-                res.json({ success: true, message: 'You have been sucessfully authenticated!', token: token });
+                res.json({ success: true, message: 'You have been sucessfully authenticated!', token: token, role: user.admin ? 1 : 0 });
             }
         });
 });

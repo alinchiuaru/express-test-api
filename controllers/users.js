@@ -32,5 +32,16 @@ router.post('/users', authorization.adminAccess, function(req, res) {
     });
 });
 
+// USER/ME not users, this will return all the details based on the token
+router.get('/user/me', authorization.regularAccess, function(req, res) {
+    authorization.decodeToken(req)
+        .then( decoded => {
+            User.findOne({
+                attributes: ['id', 'username', 'email', 'admin'],
+                where: {id: decoded.user.id}
+            }).then(data => res.json({ success: true, data: data }));
+        });
+});
+
 
 module.exports = router;

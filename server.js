@@ -14,6 +14,7 @@ var express            = require('express'),
     chapters           = require('./controllers/chapters'),
     lessons            = require('./controllers/lesson'),
     quizzes            = require('./controllers/quizzes'),
+    questions          = require('./controllers/questions'),
     answerQuestion     = require('./controllers/answerQuestion'),
     auth               = require('./controllers/auth'),
     cors               = require('cors');
@@ -36,6 +37,7 @@ app.use('/api', users);
 app.use('/api', courses);
 app.use('/api', chapters);
 app.use('/api', quizzes);
+app.use('/api', questions);
 app.use('/api', answerQuestion);
 
 // app.use('/api', lessons);

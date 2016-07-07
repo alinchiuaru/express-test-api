@@ -64,4 +64,19 @@ router.get('/quizzes/:quizId/score', authorization.regularAccess, function(req, 
         });
 });
 
+
+router.post('/quizzes', authorization.adminAccess, function(req, res) {
+    Quiz.create({
+        name: req.body.name,
+        description: req.body.description || '',
+        courseId: req.body.courseId,
+    })
+    .then(function(data) {
+        res.json({success: true, data: data});
+    })
+    .catch(function(err) {
+        res.json({success: false, message: err})
+    });
+});
+
 module.exports = router;
