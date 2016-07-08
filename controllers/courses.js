@@ -4,6 +4,7 @@ var router = express.Router();
 var Course = models.Course;
 var Chapter = models.Chapter;
 var Quiz = models.Quiz;
+var Question = models.Question;
 var authorization = require('../middlewares/authorization');
 var sequelize = require('../models').sequelize;
 
@@ -19,7 +20,7 @@ router.get('/courses/:courseId', authorization.regularAccess, function(req, res)
     Course.findOne({
         attributes : ['id', 'title', 'description', 'logo'],
         where: {id: req.params.courseId },
-        include: [ {model: Chapter, as: 'chapters'}, {model: Quiz, as: 'quizzes'} ]
+        include: [ {model: Chapter, as: 'chapters'}, {model: Quiz, as: 'quizzes', include: [ { model: Question, as: 'questions', attributes: ['id'] } ] } ]
     }).then(function(data) {
         res.json({success: true, data: data});
     });
